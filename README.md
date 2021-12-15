@@ -1,5 +1,7 @@
 # vRO Actions to JSDoc to Github/Gitlab Pages
 
+![Untitled Diagram drawio (2)](https://user-images.githubusercontent.com/7029361/145952228-b555bc24-2507-4758-b72f-e92fd9b20bd1.png)
+
 This mechanism allows vRO Actions to be converted to JSDoc annotated Pure Javascript Code without even using any JSdoc annotatio in vRO. This mechanism intelligently fetches the funtionName, version, inputs and outputs from the vRO Actions itself and create comments on basis of it.
 
 ```javascript
@@ -18,5 +20,5 @@ var machine = System.getModule("com.vmware.library.view.assignment").getAssigned
 if (machine)
      return machine.name;
 ```
-Here, all the JSDoc is derived from vRO Action itself. There was not additional metadata/comment ever added while this vRO action was formed. Hence, it gives us a out-of-the-box funtionality.
-![Untitled Diagram drawio (2)](https://user-images.githubusercontent.com/7029361/145952228-b555bc24-2507-4758-b72f-e92fd9b20bd1.png)
+Here, all the JSDoc comments are derived from vRO Action itself. There is no additional metadata/comment ever added while this vRO action was formed. Hence, it gives us a out-of-the-box funtionality.
+
