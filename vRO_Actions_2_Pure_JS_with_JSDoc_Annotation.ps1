@@ -39,7 +39,6 @@ foreach ($d in $dir){
         [xml]$xmlElm = Get-Content -Path .\categories
         #this getthe action name
         $catNameFolder = $xmlElm.categories.category.name.'#cdata-section'
-        $catNameFolder = $catNameFolder.ToLower()
         write-host "Module name: " $catNameFolder
  
         [xml]$xmlElm = Get-Content -Path .\info
@@ -78,6 +77,7 @@ foreach ($d in $dir){
              echo "/**" >> $actionName
              #echo " * @author Mayank Goyal [mayankgoyalmax@gmail.com]" >> $actionName
              $function = " * @function "+ $xmlElm.'dunes-script-module'.name
+             $memberOf = " * @memberof "+ $catNameFolder
              echo $function >> $actionName
              $actionVersion = " * @version "+ $xmlElm.'dunes-script-module'.version
              echo $actionVersion >> $actionName
