@@ -2,7 +2,7 @@
     Author: Mayank Goyal
     Version: 1.0.0
     Description:
-    - Create a new file *.js from Actions with JSDoc Annotations
+    - Create new files *.js from Actions with JSDoc Annotations under .\Actions\*module names*\
 #>
 
 #Changing Default UTF-16 LE Encoding to UTF-8 for JSDoc compatibility
