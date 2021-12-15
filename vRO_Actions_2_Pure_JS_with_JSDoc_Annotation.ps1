@@ -2,11 +2,7 @@
     Author: Mayank Goyal
     Version: 1.0.0
     Description:
-    - Doesn't work for Workflows and Resource Elements 
-    - Get all content from exported vRO package Elements folder from .package file
-    - Run through each folder and read categories (Modules)
-    - Create a new file *.js from Actions
- 
+    - Create a new file *.js from Actions with JSDoc Annotations
 #>
 
 #Changing Default UTF-16 LE Encoding to UTF-8 for JSDoc compatibility
@@ -14,10 +10,10 @@ $PSDefaultParameterValues['*:Encoding'] = 'utf8'
 
 ## Inputs: 
 #Element Folder Path after package unziped
-$ElementsFolder = $(Write-Host "Where is your unzipped vRO Package stored? (provide full path - e.g.: C:\vRA4U\com.vro.some.module\elements)-- " -NoNewLine -ForegroundColor yellow; Read-Host)
+$ElementsFolder = $(Write-Host "Path to unzipped vRO Package? (provide full path ex. C:\com.vro.some.module\elements)-- " -NoNewLine -ForegroundColor yellow; Read-Host)
  
 # Path to save all new Modules and Actions
-$savePath = $(Write-Host "Where would you like to save all Modules and Actions? (provide full path) -- " -NoNewLine -ForegroundColor yellow; Read-Host)
+$savePath = $(Write-Host "Path to save Actions? (provide full path) -- " -NoNewLine -ForegroundColor yellow; Read-Host)
  
 #Ask if Script is being executed on a Mac (for forwards slash vs backslash in folders)
 $defaultOSType = 'windows' 
