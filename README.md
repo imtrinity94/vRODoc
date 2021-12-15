@@ -23,7 +23,7 @@ if (machine)
 Here, all the JSDoc comments are derived from vRO Action itself. There is no additional metadata/comment ever added while this vRO action was formed. Hence, it gives us a out-of-the-box funtionality.
 
 ### Contributing
-If you find any issue with the current scripts, you can [create a issue.](https://github.com/imtrinity94/vmware_vro/issues/new)
+If you find any issue with the current scripts, you can [create a issue.](https://github.com/imtrinity94/vro_jsdoc_pages/issues/new)
 
 If you have any other scripts that you want to share, you can [create a pull request.](https://github.com/imtrinity94/vro_jsdoc_pages/compare)
 
