@@ -23,11 +23,11 @@ if (machine)
 Here, all the JSDoc comments are derived from vRO Action itself. There is no additional metadata/comment ever added while this vRO action was formed. Hence, it gives us a out-of-the-box funtionality.
 
 ### Contributing
-If you find any issue with the current scripts, you can [create a issue.](https://github.com/imtrinity94/vro_jsdoc_pages/issues/new)
+If you find any issue with the current scripts, you can [create a issue.](https://github.com/imtrinity94/vRODoc/issues/new)
 
-If you have any other scripts that you want to share, you can [create a pull request.](https://github.com/imtrinity94/vro_jsdoc_pages/compare)
+If you have any other scripts that you want to share, you can [create a pull request.](https://github.com/imtrinity94/vRODoc/compare)
 
 
 
-[![SHARINGISCARING](http://ForTheBadge.com/images/badges/built-with-love.svg)](https://github.com/imtrinity94/vro_jsdoc_pages) <br>
+[![SHARINGISCARING](http://ForTheBadge.com/images/badges/built-with-love.svg)](https://github.com/imtrinity94/vRODoc) <br>
 <img src="https://user-images.githubusercontent.com/7029361/126627909-e7ea306a-a3cc-45e4-9be9-d22e1277fcc9.png" width="180" height="123">
