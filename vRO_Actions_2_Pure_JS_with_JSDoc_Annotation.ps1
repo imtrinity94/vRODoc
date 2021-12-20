@@ -78,18 +78,20 @@ foreach ($d in $dir){
              #echo " * @author Mayank Goyal [mayankgoyalmax@gmail.com]" >> $actionName
              $function = " * @function "+ $xmlElm.'dunes-script-module'.name
              $memberOf = " * @memberof "+ $catNameFolder
-             echo $function >> $actionName
              $actionVersion = " * @version "+ $xmlElm.'dunes-script-module'.version
-             echo $actionVersion >> $actionName
              if ($xmlElm.'dunes-script-module'.description.'#cdata-section') {
                 $description = " * @description" + $xmlElm.'dunes-script-module'.description.'#cdata-section'
-             }
+             }             
+             echo $function >> $actionName
+             echo $memberOf >> $actionName
+             echo $actionVersion >> $actionName
              echo $decription  >> $actionName
-             $paramtypes = $xmlElm.'dunes-script-module'.param.t
+             
+             $paramTypes = $xmlElm.'dunes-script-module'.param.t
              $paramNames = $xmlElm.'dunes-script-module'.param.n
-             $paramDescription = $xmlElm.'dunes-script-module'.param.'#cdata-section'
-             For ($i=0; $i -lt $paramNames.length; $i++) {
-                $params = " * @param {" + $paramTypes[$i] + '} ' + $paramNames[$i] + ' ' + $paramDescription[$i]
+             $paramDescriptions = $xmlElm.'dunes-script-module'.param.'#cdata-section'
+             For ($i=0; $i -lt $paramTypes.length; $i++) {
+                $params = " * @param {" + $paramTypes[$i] + '} ' + $paramNames[$i] + ' ' + $paramDescriptions[$i]
                 echo $params >> $actionName
              }
              if ($xmlElm.'dunes-script-module'.'result-type'){
@@ -98,8 +100,13 @@ foreach ($d in $dir){
              echo $return >> $actionName
              echo " */" >> $actionName
              
-             # adding script content
+             # adding funtion and script content
+             $functionHeader = "function " + $xmlElm.'dunes-script-module'.name + "("
+             $functionHeader += ($paramNames) -join ","
+             $functionHeader += ") {"
+             echo $functionHeader >> $actionName
              echo $actionScript >> $actionName
+             echo "};" >> $actionName
  
              # Copy to final upload location
              mv $actionName $savePath$slash'Actions'$slash$catNameFolder$slash$actionName
