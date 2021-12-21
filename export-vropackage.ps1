@@ -1,11 +1,12 @@
+# Tested on vRO 8.3 
 Param(
-  [string]$vroHost="localhost",
-  [string]$vroPort="8281",
-  [string]$user="vcoadmin",
-  [string]$pass="vcoadmin",
-  [string]$exportPath="c:\",
+  [string]$vroHost="vro.domain",
+  [string]$vroPort="443",
+  [string]$user="user@domain",
+  [string]$pass="********",
+  [string]$exportPath="C:\Users\temp",
   [Parameter(Mandatory=$true)]
-  [string]$packageName='com.vmware.test',
+  [string]$packageName='ALL.ELEMENTS',
   [string]$fileName=$packageName + ".package"
 )
 
@@ -14,7 +15,6 @@ Param(
 # If you run the script with no parameters specified, the default values defined above will be used.
 # to run with params, See following example: (Should be all one line)
 # NOTE: It is not required to specify name of each parameter, but order will need to match the order in the above params section
-# NOTE: Be sure exportPath includes trailing backslash
 # PS C:\> ./export-package.ps1 -vroHost vro6.demo.lab -vroPort 8281 -user vcoadmin -pass vcoadmin -exportPath "c:\hol\" -packageName await-tokens
 #
 ####################################################################
@@ -51,8 +51,12 @@ $expPackageURI = "https://$($vroHost):$($vroPort)/vco/api/packages/$($packageNam
 $ret = Invoke-WebRequest -uri $expPackageURI -Headers $headers -ContentType "application/zip;charset=utf-8" -Method Get
 #Start-Sleep -s 10
 
-$ret.Content | Set-Content -Path  $exportpath$fileName -Encoding Byte
+$ret.Content | Set-Content -Path  $exportPath\$fileName -Encoding Byte
 
 write-host "";
 write-host "$expPackageURI";
-write-host "Exported  to: $exportpath$fileName";
+write-host "Exported  to: $exportPath\$fileName";
+Rename-Item $exportPath\$fileName $packageName'.zip'
+Expand-Archive -LiteralPath $exportPath\$packageName'.zip' -DestinationPath $exportPath\$packageName
+write-host "Extracted  to: $exportPath\$packageName";
+
