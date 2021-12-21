@@ -77,13 +77,13 @@ foreach ($d in $dir){
              echo "/**" >> $actionName
              #echo " * @author Mayank Goyal [mayankgoyalmax@gmail.com]" >> $actionName
              $function = " * @function "+ $xmlElm.'dunes-script-module'.name
-             $memberOf = " * @memberof "+ $catNameFolder
+             #$memberOf = " * @memberof "+ $catNameFolder
              $actionVersion = " * @version "+ $xmlElm.'dunes-script-module'.version
              if ($xmlElm.'dunes-script-module'.description.'#cdata-section') {
                 $description = " * @description" + $xmlElm.'dunes-script-module'.description.'#cdata-section'
              }             
              echo $function >> $actionName
-             echo $memberOf >> $actionName
+             # echo $memberOf >> $actionName not showing up actions under global - not usable
              echo $actionVersion >> $actionName
              echo $decription  >> $actionName
              
