@@ -1,10 +1,11 @@
 <#
     Author: Mayank Goyal
-    Version: 2.0.0
-    Last Updated: 21st Dec 2021
-    Description: Create new files *.js directly from vRO. It consumes a package name which should exist in vRO with all the Actions you wanted to document and creates .js files with JSDoc Annotations under $exportPath\$packageName\Actions\*module names*\
-	  How to run: ./vrodoc_script.ps1 -vroHost vro.domain -vroPort 443 -user user@domain -pass pa$$word -exportPath "c:\users\user" -packageName com.package.name
-	  Notes: If you run the script with no parameters specified, the default values defined below will be used.
+    Version: 2.1.0
+    Last Updated: 22nd Dec 2021
+    Description: Create new files *.js directly from vRO. It consumes a package name which should exist in vRO with all the Actions you wanted to document and creates .js files with JSDoc Annotations under $exportPath\$packageName\Actions\*module names*\ and converted .html files under $exportPath\$packageName\docs
+    How to run: ./vrodoc_script.ps1 -vroHost vro.domain -vroPort 443 -user user@domain -pass pa$$word -exportPath "c:\users\user" -packageName com.package.name
+    Notes: If you run the script with no parameters specified, the default values defined below will be used.
+    Requires: nodejs and jsdoc module installed
 #>
 
 Param(
@@ -159,11 +160,16 @@ foreach ($d in $dir){
              $functionHeader += ($paramNames) -join ","
              $functionHeader += ") {"
              echo $functionHeader >> $actionName
-             echo $actionScript >> $actionName
+			 if ($actionScript) {
+				foreach ($line in $actionScript.split([System.Environment]::NewLine)) {
+					echo `t$line >> $actionName
+				}
+			 }
+             ##echo `t$actionScript >> $actionName
              echo "};" >> $actionName
  
              # Copy to final upload location
-             mv $actionName $savePath$slash'Actions'$slash$catNameFolder$slash$actionName
+             mv -ErrorAction SilentlyContinue $actionName $savePath$slash'Actions'$slash$catNameFolder$slash$actionName 
  
         }else{
             write-host "Skipping Workflows, Configuration Elements & Resource Elements"
@@ -173,3 +179,6 @@ foreach ($d in $dir){
     cd ..
  
 }
+
+jsdoc --recurse $savePath$slash'Actions' -d $savePath$slash'docs'
+write-host "Actions(.js) converted to .html at  $savePath\docs";
