@@ -25,7 +25,7 @@ funtion getAllDesktopsForAUserInPool(poolName,userName){
           return machine.name;
 };
 ```
-<h6> * Here, all the JSDoc comments are derived from vRO Action itself. There is no additional metadata/comment ever added while this vRO action was formed. Hence, it gives us a out-of-the-box funtionality.
+<h6>Here, all the JSDoc comments are derived from vRO Action itself. There is no additional metadata/comment ever added while this vRO action was formed. Hence, it gives us a out-of-the-box funtionality. </h6>
 
 ### Contributing
 If you find any issue with the current scripts, you can [create a issue.](https://github.com/imtrinity94/vRODoc/issues/new)
