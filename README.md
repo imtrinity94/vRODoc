@@ -1,9 +1,11 @@
-# vRODoc - Convert vRO Actions to JSDoc to Github/Gitlab Pages
+# <img width="211" alt="vRODoc (2)" src="https://user-images.githubusercontent.com/7029361/147040227-c5e64b5e-7e0c-4a42-833b-f225d88c88af.png"> 
+### Convert vRO Actions to JSDoc to Github/Gitlab Pages
+
+This mechanism allows vRO Actions to be converted to JSDoc annotated Pure Javascript Code without even using any JSdoc annotation inside vRO. This mechanism intelligently fetches the funtionName, version, inputs and outputs from the vRO Actions itself and create JSDoc comments on basis of it.
 
 ![vRODoc (1)](https://user-images.githubusercontent.com/7029361/147033759-14e64ca1-f100-41bd-bec8-7319806ca713.jpg)
 
-This mechanism allows vRO Actions to be converted to JSDoc annotated Pure Javascript Code without even using any JSdoc annotatio in vRO. This mechanism intelligently fetches the funtionName, version, inputs and outputs from the vRO Actions itself and create comments on basis of it.
-
+### Example 
 ```javascript
 /**
  * @function getAllDesktopsForAUserInPool
@@ -20,7 +22,7 @@ var machine = System.getModule("com.vmware.library.view.assignment").getAssigned
 if (machine)
      return machine.name;
 ```
-Here, all the JSDoc comments are derived from vRO Action itself. There is no additional metadata/comment ever added while this vRO action was formed. Hence, it gives us a out-of-the-box funtionality.
+<h6> * Here, all the JSDoc comments are derived from vRO Action itself. There is no additional metadata/comment ever added while this vRO action was formed. Hence, it gives us a out-of-the-box funtionality.
 
 ### Contributing
 If you find any issue with the current scripts, you can [create a issue.](https://github.com/imtrinity94/vRODoc/issues/new)
