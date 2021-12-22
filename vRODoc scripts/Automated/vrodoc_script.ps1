@@ -51,7 +51,6 @@ $auth = "Basic $($token)";
 $headers = @{"Authorization"= $auth;'Accept'='Application/zip'; 'Accept-Encoding'='gzip, deflate'; };
 $expPackageURI = "https://$($vroHost):$($vroPort)/vco/api/packages/$($packageName)/?exportConfigurationAttributeValues=true";
 $ret = Invoke-WebRequest -uri $expPackageURI -Headers $headers -ContentType "application/zip;charset=utf-8" -Method Get
-#Start-Sleep -s 10
 
 $ret.Content | Set-Content -Path  $exportPath\$fileName -Encoding Byte
 
@@ -62,7 +61,7 @@ Rename-Item $exportPath\$fileName $packageName'.zip'
 Expand-Archive -LiteralPath $exportPath\$packageName'.zip' -DestinationPath $exportPath\$packageName
 write-host "Extracted  to: $exportPath\$packageName";
 
-#Changing Default UTF-16 LE Encoding to UTF-8 for JSDoc compatibility
+#Changing Default UTF-16 LE Encoding to UTF-8 for JSDoc compatibility. You can also change jsdoc config to consume UTF-16 .js files
 $PSDefaultParameterValues['*:Encoding'] = 'utf8'
 
 ## Inputs: 
@@ -106,7 +105,6 @@ foreach ($d in $dir){
                 mkdir $savePath$slash'Actions'$slash$catNameFolder
              }
               
- 
              #Get the data file to determine vRO Action
              Select-Xml -Path .\data -XPath 'dunes-script-module/script'
              [xml]$xmlElm = Get-Content -Path .\data
@@ -141,14 +139,10 @@ foreach ($d in $dir){
              $paramTypes = $params.t
              $paramNames = $params.n
              $paramDescriptions = $params.'#cdata-section'
-             <#For ($i=0; $i -lt $params.length; $i++) {
-                $params = " * @param {" + $paramTypes[$i] + '} ' + $paramNames[$i] + ' ' + $paramDescriptions[$i]
-                echo $params >> $actionName
-             }#>
-			 foreach ($param in $params) {
-				$params = " * @param {" + $param.t + '} ' + $param.n + ' ' + $param.'#cdata-section'
-				echo $params >> $actionName
-			 }
+	     foreach ($param in $params) {
+			$params = " * @param {" + $param.t + '} ' + $param.n + ' ' + $param.'#cdata-section'
+			echo $params >> $actionName
+	     }
              if ($xmlElm.'dunes-script-module'.'result-type'){
                 $return = " * @returns {" + $xmlElm.'dunes-script-module'.'result-type' + "}"
              }
