@@ -3,24 +3,27 @@
 
 This mechanism allows vRO Actions to be converted to JSDoc annotated Pure Javascript Code without even using any JSdoc annotation inside vRO. This mechanism intelligently fetches the funtionName, version, inputs and outputs from the vRO Actions itself and create JSDoc comments on basis of it.
 
-![vRODoc (1)](https://user-images.githubusercontent.com/7029361/147033759-14e64ca1-f100-41bd-bec8-7319806ca713.jpg)
+![vrodoc_process - Copy](https://user-images.githubusercontent.com/7029361/147050088-5fe238b1-f768-4199-ae7d-af3e756927e8.jpg)
+
 
 ### Example 
 ```javascript
 /**
  * @function getAllDesktopsForAUserInPool
- * @version 0.0.0
+ * @version 1.8.12
  * @param {string} poolName 
  * @param {string} username 
- * @returns string
+ * @returns {string}
  */
-var DAConfiguration = System.getModule("com.mayank.actions").getDAConfigurationElement();
-var podConfiguration = System.getModule("com.mayank.actions").getPodConfigurationElement();
-var daUser = System.getModule("com.mayank.actions").getDA();
-var podAlias = System.getModule("com.vmware.library.view.configuration").getDefaultOrFirstPod(DAConfiguration, daUser);
-var machine = System.getModule("com.vmware.library.view.assignment").getAssignedMachine(poolName, podAlias, username, podConfiguration);
-if (machine)
-     return machine.name;
+funtion getAllDesktopsForAUserInPool(poolName,userName){
+     var DAConfiguration = System.getModule("com.mayank.actions").getDAConfigurationElement();
+     var podConfiguration = System.getModule("com.mayank.actions").getPodConfigurationElement();
+     var daUser = System.getModule("com.mayank.actions").getDA();
+     var podAlias = System.getModule("com.vmware.library.view.configuration").getDefaultOrFirstPod(DAConfiguration, daUser);
+     var machine = System.getModule("com.vmware.library.view.assignment").getAssignedMachine(poolName, podAlias, username, podConfiguration);
+     if (machine)
+          return machine.name;
+};
 ```
 <h6> * Here, all the JSDoc comments are derived from vRO Action itself. There is no additional metadata/comment ever added while this vRO action was formed. Hence, it gives us a out-of-the-box funtionality.
 
