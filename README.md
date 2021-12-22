@@ -1,7 +1,6 @@
 # vRODoc - Convert vRO Actions to JSDoc to Github/Gitlab Pages
 
-
-![Untitled Diagram drawio (2)](https://user-images.githubusercontent.com/7029361/145952228-b555bc24-2507-4758-b72f-e92fd9b20bd1.png)
+![vRODoc (1)](https://user-images.githubusercontent.com/7029361/147033759-14e64ca1-f100-41bd-bec8-7319806ca713.jpg)
 
 This mechanism allows vRO Actions to be converted to JSDoc annotated Pure Javascript Code without even using any JSdoc annotatio in vRO. This mechanism intelligently fetches the funtionName, version, inputs and outputs from the vRO Actions itself and create comments on basis of it.
 
