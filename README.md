@@ -8,8 +8,23 @@ Read this article: https://www.linkedin.com/pulse/vrodoc-convert-vro-actions-js-
 
 ![vrodoc_process - Copy](https://user-images.githubusercontent.com/7029361/147050088-5fe238b1-f768-4199-ae7d-af3e756927e8.jpg)
 
+### Installation
+
+* Just run this command in your Powershell
+```
+Install-Script -Name vRODoc
+```
+* or you can also download this repo directly
+
+## How to run
+
+- Go to the downloaded vrodoc_script.ps1 file and edit it to pass the connection related parameters inside it. 
+- Open Powershell editor at that location and just execute it using .\exact_fielname_of_vRODoc.ps1
 
 ### Example 
+
+Let's say you created a simple action in vRO. Now you want that action to be documented. vRODoc has the capability to convert your action into a pure JS code with JSDoc annotations as you can see in the comments of this below mentioned JS code nd then will convert it into a .html page that will be a part of your JSDoc website.
+
 ```javascript
 /**
  * @function getAllDesktopsForAUserInPool
