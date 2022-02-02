@@ -1,7 +1,7 @@
 <#
     Author: Mayank Goyal
-    Version: 1.1.0
-    Last Updated: 20th Dec 2021
+    Version: 1.2.0
+    Last Updated: 2nd Feb 2022
     Description: Create new files *.js from Actions with JSDoc Annotations under .\Actions\*module names*\
 #>
 
@@ -86,36 +86,41 @@ foreach ($d in $dir){
              # echo $memberOf >> $actionName not showing up actions under global - not usable
              echo $actionVersion >> $actionName
              echo $decription  >> $actionName
-
-             $paramTypes = $xmlElm.'dunes-script-module'.param.t
-             $paramNames = $xmlElm.'dunes-script-module'.param.n
-             $paramDescriptions = $xmlElm.'dunes-script-module'.param.'#cdata-section'
-             For ($i=0; $i -lt $paramTypes.length; $i++) {
-                $params = " * @param {" + $paramTypes[$i] + '} ' + $paramNames[$i] + ' ' + $paramDescriptions[$i]
-                echo $params >> $actionName
-             }
+			 $params = $xmlElm.'dunes-script-module'.param
+             $paramTypes = $params.t
+             $paramNames = $params.n
+             $paramDescriptions = $params.'#cdata-section'
+	     foreach ($param in $params) {
+			$params = " * @param {" + $param.t + '} ' + $param.n + ' ' + $param.'#cdata-section'
+			echo $params >> $actionName
+	     }
              if ($xmlElm.'dunes-script-module'.'result-type'){
-                $return = " * @returns " + $xmlElm.'dunes-script-module'.'result-type'
+                $return = " * @returns {" + $xmlElm.'dunes-script-module'.'result-type' + "}"
              }
              echo $return >> $actionName
              echo " */" >> $actionName
-
-             # adding funtion and script content
+             
+             # adding function and script content
              $functionHeader = "function " + $xmlElm.'dunes-script-module'.name + "("
              $functionHeader += ($paramNames) -join ","
              $functionHeader += ") {"
              echo $functionHeader >> $actionName
-             echo $actionScript >> $actionName
+			 if ($actionScript) {
+				foreach ($line in $actionScript.split([System.Environment]::NewLine)) {
+					echo `t$line >> $actionName
+				}
+			 }
+             ##echo `t$actionScript >> $actionName
              echo "};" >> $actionName
-
+ 
              # Copy to final upload location
-             mv $actionName $savePath$slash'Actions'$slash$catNameFolder$slash$actionName
-
+             mv -ErrorAction SilentlyContinue $actionName $savePath$slash'Actions'$slash$catNameFolder$slash$actionName 
+ 
         }else{
             write-host "Skipping Workflows, Configuration Elements & Resource Elements"
         }
-
+ 
     #Go back root level
     cd ..
-
+ 
 }
