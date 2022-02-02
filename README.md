@@ -1,3 +1,5 @@
+### Tutorial Video coming soon...
+
 # <img width="211" alt="vRODoc (2)" src="https://user-images.githubusercontent.com/7029361/147040227-c5e64b5e-7e0c-4a42-833b-f225d88c88af.png"> 
 ### Convert vRO Actions to JSDoc to Github/Gitlab Pages
 ![Orange Ebb and Flow Abstract LinkedIn Banner](https://user-images.githubusercontent.com/7029361/147237254-83ff1bd6-6ae3-4147-9484-16e439f1905e.png)
@@ -16,10 +18,16 @@ Install-Script -Name vRODoc
 ```
 * or you can also download this repo directly
 
+### Prerequisite
+
+* Install npm (download node.js installer) and jsdoc (npm install jsdoc)
+* Connection to vRO Server where vRO action package is created (ping fqdn-of-vro-server)
+* Any Recent version of Powershell
+
 ## How to run
 
 - Go to the downloaded vrodoc_script.ps1 file and edit it to pass the connection related parameters inside it. 
-- Open Powershell editor at that location and just execute it using .\exact_fielname_of_vRODoc.ps1
+- Open Powershell editor at that location and just execute it using .\exact_filename_of_vRODoc.ps1
 
 ### Example 
 
