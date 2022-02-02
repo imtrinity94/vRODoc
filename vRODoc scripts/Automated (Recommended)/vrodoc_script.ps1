@@ -1,11 +1,65 @@
+<#PSScriptInfo
+
+.VERSION 2.1.0
+
+.GUID 2c76e9e9-12e9-40ae-ae7e-c3dbe786d7c9
+
+.AUTHOR Mayank Goyal
+
+.COMPANYNAME
+
+.COPYRIGHT
+
+.TAGS
+
+.LICENSEURI
+
+.PROJECTURI https://github.com/imtrinity94/vRODoc
+
+.ICONURI
+
+.EXTERNALMODULEDEPENDENCIES
+
+.REQUIREDSCRIPTS
+
+.EXTERNALSCRIPTDEPENDENCIES
+
+.RELEASENOTES
+
+
+#>
+
 <#
-    Author: Mayank Goyal
-    Version: 2.1.0
-    Last Updated: 22nd Dec 2021
-    Description: Create new files *.js directly from vRO. It consumes a package name which should exist in vRO with all the Actions you wanted to document and creates .js files with JSDoc Annotations under $exportPath\$packageName\Actions\*module names*\ and converted .html files under $exportPath\$packageName\docs
-    How to run: ./vrodoc_script.ps1 -vroHost vro.domain -vroPort 443 -user user@domain -pass pa$$word -exportPath "c:\users\user" -packageName com.package.name
-    Notes: If you run the script with no parameters specified, the default values defined below will be used.
-    Requires: nodejs and jsdoc module installed
+
+.DESCRIPTION
+ This script converts vRO Package directly into JSDoc website by connecting to vRO. Requires nodejs and jsdoc module installed. Create new files *.html & *.js directly from vRO with JSDoc annotation. It consumes a package name which should exist in vRO with all the Actions you want to document and creates .js files with JSDoc Annotations under $exportPath\$packageName\Actions\*module names*\ and converted .html files under $exportPath\$packageName\docs..
+
+#>
+
+<#
+.SYNOPSIS
+vRODoc - Converts vRO Code directly into JSDoc website.
+ 
+MIT LICENSE
+
+.PARAMETER vroHost
+The FQDN of vRO host
+.PARAMETER vroPort
+for 7.x = 8281 and for 8.x = 443 
+.PARAMETER user
+Username to connect to vroHost
+.PARAMETER pass
+Password to connect to vroHost
+.PARAMETER exportPath
+Specify full path of a folder location for all the action to happen.
+.PARAMETER packageName
+Specify the package name in vroHost which contains the actions to be documented.
+.PARAMETER Reboot
+Reboot the device after the Autopilot profile has been assigned (necessary to download the profile and apply the computer name, if specified).
+.EXAMPLE
+./vrodoc_script.ps1 -vroHost vro.domain -vroPort 443 -user user@domain -pass pa$$word -exportPath "c:\users\user" -packageName com.package.name
+.EXAMPLE
+./vrodoc_script.ps1
 #>
 
 Param(
