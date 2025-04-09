@@ -1,64 +1,95 @@
-### Tutorial Video coming soon...
+Here's a well-structured README.md for your vRODoc script:
 
-# <img width="211" alt="vRODoc (2)" src="https://user-images.githubusercontent.com/7029361/147040227-c5e64b5e-7e0c-4a42-833b-f225d88c88af.png"> 
-### Convert vRO Actions to JSDoc to Github/Gitlab Pages
-![Orange Ebb and Flow Abstract LinkedIn Banner](https://user-images.githubusercontent.com/7029361/147237254-83ff1bd6-6ae3-4147-9484-16e439f1905e.png)
+```markdown:c:\Users\M.Goyal\Downloads\README.md
+# vRODoc - vRO Documentation Generator
 
-This mechanism allows vRO Actions to be converted to JSDoc annotated Pure Javascript Code without even using any JSdoc annotation inside vRO. This mechanism intelligently fetches the funtionName, version, inputs and outputs from the vRO Actions itself and create JSDoc comments on basis of it.
+## Overview
+vRODoc is a PowerShell-based tool that automatically generates comprehensive JSDoc documentation from VMware vRealize Orchestrator (vRO) packages. It simplifies the process of documenting vRO actions by creating a searchable HTML documentation site.
 
-Read this article: https://www.linkedin.com/pulse/vrodoc-convert-vro-actions-js-annotated-javascript-post-goyal
+## Features
+- 🚀 Automatic prerequisite checking and installation
+- 🔐 Secure vRO authentication handling
+- 📦 Package extraction and processing
+- 📄 JSDoc-compatible documentation generation
+- 🌐 Searchable HTML output
+- ⚡ Support for both vRO 7.x and 8.x
 
-![vrodoc_process - Copy](https://user-images.githubusercontent.com/7029361/147050088-5fe238b1-f768-4199-ae7d-af3e756927e8.jpg)
+## Prerequisites
+- PowerShell 5.1 or higher
+- Node.js
+- JSDoc
+- Write access to export directory
+- Network access to vRO server
 
-### Installation
+> The script can automatically install missing prerequisites if `autoFix` is enabled.
 
-* Just run this command in your Powershell
+## Usage
+
+### Basic Usage
+```powershell
+.\vroDoc.ps1 -packageName "com.vmware.library.http-rest"
 ```
-Install-Script -Name vRODoc
+
+### Advanced Usage
+```powershell
+.\vroDoc.ps1 -vroHost "vro.company.com" `
+             -vroPort "443" `
+             -user "admin@vsphere.local" `
+             -pass "yourpassword" `
+             -exportPath "C:\Documentation" `
+             -packageName "com.vmware.library.http-rest" `
+             -autoFix $true `
+             -skipChecks $false
 ```
-* or you can also download this repo directly
 
-### Prerequisite
+### Parameters
+| Parameter    | Description                                      | Default        |
+|-------------|--------------------------------------------------|----------------|
+| vroHost     | vRO server FQDN                                  | vro.domain     |
+| vroPort     | vRO port (443 for 8.x, 8281 for 7.x)            | 443            |
+| user        | Username for vRO authentication                   | user@domain    |
+| pass        | Password for vRO authentication                   | -              |
+| exportPath  | Output directory for documentation               | C:\Users\user\ |
+| packageName | vRO package name to document                     | -              |
+| autoFix     | Automatically fix missing prerequisites          | true           |
+| skipChecks  | Skip prerequisite checks (not recommended)       | false          |
 
-* Install npm (download node.js installer) and jsdoc (npm install jsdoc)
-* Connection to vRO Server where vRO action package is created (ping fqdn-of-vro-server)
-* Any Recent version of Powershell
-
-## How to run
-
-- Go to the downloaded vrodoc_script.ps1 file and edit it to pass the connection related parameters inside it. 
-- Open Powershell editor at that location and just execute it using .\exact_filename_of_vRODoc.ps1
-
-### Example 
-
-Let's say you created a simple action in vRO. Now you want that action to be documented. vRODoc has the capability to convert your action into a pure JS code with JSDoc annotations as you can see in the comments of this below mentioned JS code nd then will convert it into a .html page that will be a part of your JSDoc website.
-
-```javascript
-/**
- * @function getAllDesktopsForAUserInPool
- * @version 1.8.12
- * @param {string} poolName 
- * @param {string} username 
- * @returns {string}
- */
-funtion getAllDesktopsForAUserInPool(poolName,userName){
-     var DAConfiguration = System.getModule("com.mayank.actions").getDAConfigurationElement();
-     var podConfiguration = System.getModule("com.mayank.actions").getPodConfigurationElement();
-     var daUser = System.getModule("com.mayank.actions").getDA();
-     var podAlias = System.getModule("com.vmware.library.view.configuration").getDefaultOrFirstPod(DAConfiguration, daUser);
-     var machine = System.getModule("com.vmware.library.view.assignment").getAssignedMachine(poolName, podAlias, username, podConfiguration);
-     if (machine)
-          return machine.name;
-};
+## Output Structure
 ```
-<h6>Here, all the JSDoc comments are derived from vRO Action itself. There is no additional metadata/comment ever added while this vRO action was formed. Hence, it gives us a out-of-the-box funtionality. </h6>
+exportPath/
+└── vRODoc Files/
+    ├── Combined_Actions/
+    │   └── [Package_Name]/
+    │       └── [Category]/
+    │           └── action.js
+    └── docs/
+        └── index.html
+```
 
-### Contributing
-If you find any issue with the current scripts, you can [create a issue.](https://github.com/imtrinity94/vRODoc/issues/new)
+## Features
+- Automatic prerequisite validation
+- Self-healing installation of dependencies
+- Secure token-based authentication
+- Comprehensive error handling
+- Progress indicators
+- Clean documentation output
 
-If you have any other scripts that you want to share, you can [create a pull request.](https://github.com/imtrinity94/vRODoc/compare)
+## Contributing
+Contributions are welcome! Please feel free to submit pull requests.
 
+## License
+This project is licensed under the MIT License - see the LICENSE file for details.
 
+## Acknowledgments
+- VMware vRealize Orchestrator team
+- JSDoc community
+- Node.js community
 
-[![SHARINGISCARING](http://ForTheBadge.com/images/badges/built-with-love.svg)](https://github.com/imtrinity94/vRODoc) <br>
-<img src="https://user-images.githubusercontent.com/7029361/126627909-e7ea306a-a3cc-45e4-9be9-d22e1277fcc9.png" width="180" height="123">
+## Support
+For issues, questions, or contributions, please open an issue in the GitHub repository.
+
+---
+Made with ❤️ for the vRO community
+```
+
+This README provides a comprehensive overview of your script while maintaining a clean, professional appearance and including all necessary information for users to get started quickly.
