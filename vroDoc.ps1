@@ -440,12 +440,20 @@ try {
 /**
  * @function $($xmlElm.'dunes-script-module'.name)
  * @version $($xmlElm.'dunes-script-module'.version)
+"@
+
+            # Add description only if it exists
+            if ($xmlElm.'dunes-script-module'.description.'#cdata-section') {
+                $jsContent += @"
+
  * @description $($xmlElm.'dunes-script-module'.description.'#cdata-section')
 "@
+            }
 
             # Add parameters
             foreach ($param in $actionParams) {
                 $jsContent += @"
+
  * @param {$($param.t)} $($param.n) $($param.'#cdata-section')
 "@
             }
@@ -453,11 +461,13 @@ try {
             # Add return type if exists
             if ($xmlElm.'dunes-script-module'.'result-type') {
                 $jsContent += @"
+
  * @returns {$($xmlElm.'dunes-script-module'.'result-type')}
 "@
             }
 
             $jsContent += @"
+            
  */
 function $($xmlElm.'dunes-script-module'.name)($(($actionParams.n) -join ', ')) {
 $($actionScript -replace "(?m)^", "`t")
