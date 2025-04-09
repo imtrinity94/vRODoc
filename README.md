@@ -22,7 +22,6 @@ vRODoc is a PowerShell-based tool that automatically generates comprehensive JSD
 
 > The script can automatically install missing prerequisites if `autoFix` is enabled.
 ```
-
 ## Usage
 ```powershell
 .\vroDoc.ps1 -vroHost "vro.company.com" `
