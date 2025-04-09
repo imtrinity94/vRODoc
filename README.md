@@ -89,4 +89,3 @@ For issues, questions, or contributions, please open an issue in the GitHub repo
 
 ---
 Made with ❤️ for the vRO community
-```
