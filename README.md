@@ -1,6 +1,5 @@
-Here's a well-structured README.md for your vRODoc script:
 
-```markdown:c:\Users\M.Goyal\Downloads\README.md
+```markdown
 # vRODoc - vRO Documentation Generator
 
 ## Overview
