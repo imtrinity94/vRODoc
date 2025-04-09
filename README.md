@@ -54,12 +54,12 @@ vRODoc is a PowerShell-based tool that automatically generates comprehensive JSD
 ```
 exportPath/
 └── vRODoc Files/
-    ├── Combined_Actions/
-    │   └── [Package_Name]/
-    │       └── [Category]/
-    │           └── action.js
-    └── docs/
-        └── index.html
+    ├── [Package_Name]/
+        └── Actions/
+        |   └── [Category]/
+        |        └── action.js
+        └── docs/
+            └── index.html
 ```
 ## Output HTML webpages with JSdoc annotation
 
