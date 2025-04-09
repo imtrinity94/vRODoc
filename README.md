@@ -22,15 +22,9 @@ vRODoc is a PowerShell-based tool that automatically generates comprehensive JSD
 - Network access to vRO server
 
 > The script can automatically install missing prerequisites if `autoFix` is enabled.
-
-## Usage
-
-### Basic Usage
-```powershell
-.\vroDoc.ps1 -packageName "com.vmware.library.http-rest"
 ```
 
-### Advanced Usage
+## Usage
 ```powershell
 .\vroDoc.ps1 -vroHost "vro.company.com" `
              -vroPort "443" `
@@ -40,7 +34,9 @@ vRODoc is a PowerShell-based tool that automatically generates comprehensive JSD
              -packageName "com.vmware.library.http-rest" `
              -autoFix $true `
              -skipChecks $false
+
 ```
+![vrodoc_1](https://github.com/user-attachments/assets/3586588e-271e-42bd-a71d-c29329a06b32)
 
 ### Parameters
 | Parameter    | Description                                      | Default        |
@@ -65,6 +61,10 @@ exportPath/
     └── docs/
         └── index.html
 ```
+## Output HTML webpages with JSdoc annotation
+
+![vrodoc_2](https://github.com/user-attachments/assets/bf034c86-01eb-4aef-a1a4-e9cb70bce10f)
+
 
 ## Features
 - Automatic prerequisite validation
