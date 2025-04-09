@@ -90,5 +90,3 @@ For issues, questions, or contributions, please open an issue in the GitHub repo
 ---
 Made with ❤️ for the vRO community
 ```
-
-This README provides a comprehensive overview of your script while maintaining a clean, professional appearance and including all necessary information for users to get started quickly.
