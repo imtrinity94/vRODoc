@@ -19,6 +19,8 @@ vRODoc is a PowerShell-based tool that automatically generates comprehensive JSD
 - JSDoc
 - Write access to export directory
 - Network access to vRO server
+- Embedded vRO Setup only
+- Works on Windows. Script not tested on Linux.
 
 > The script can automatically install missing prerequisites if `autoFix` is enabled.
 ```
@@ -39,10 +41,10 @@ vRODoc is a PowerShell-based tool that automatically generates comprehensive JSD
 ### Parameters
 | Parameter    | Description                                      | Default        |
 |-------------|--------------------------------------------------|----------------|
-| vroHost     | vRO server FQDN                                  | vro.domain     |
+| vroHost     | embedded vRO server FQDN                                  | vro.domain     |
 | vroPort     | vRO port (443 for 8.x, 8281 for 7.x)            | 443            |
-| user        | Username for vRO authentication                   | user@domain    |
-| pass        | Password for vRO authentication                   | -              |
+| user        | Username for vRA authentication                   | user@domain    |
+| pass        | Password for vRA authentication                   | -              |
 | exportPath  | Output directory for documentation               | C:\Users\user\ |
 | packageName | vRO package name to document                     | -              |
 | autoFix     | Automatically fix missing prerequisites          | true           |
