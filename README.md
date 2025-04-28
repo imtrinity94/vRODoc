@@ -41,10 +41,10 @@ vRODoc is a PowerShell-based tool that automatically generates comprehensive JSD
 ### Parameters
 | Parameter    | Description                                      | Default        |
 |-------------|--------------------------------------------------|----------------|
-| vroHost     | embedded vRO server FQDN                                  | vro.domain     |
+| vroHost     | vRA FQDN for embedded vRO                                 | vro.domain     |
 | vroPort     | vRO port (443 for 8.x, 8281 for 7.x)            | 443            |
 | user        | Username for vRA authentication                   | user@domain    |
-| pass        | Password for vRA authentication                   | -              |
+| pass        | Password for vRA authentication                   | pa$$W0rd              |
 | exportPath  | Output directory for documentation               | C:\Users\user\ |
 | packageName | vRO package name to document                     | -              |
 | autoFix     | Automatically fix missing prerequisites          | true           |
@@ -65,6 +65,12 @@ exportPath/
 
 ![vrodoc_2](https://github.com/user-attachments/assets/bf034c86-01eb-4aef-a1a4-e9cb70bce10f)
 
+## Steps to follow
+- Create a package with all the custom actions.
+- As script works for embedded vRO, fill all the parameter values either in script or while running the script.
+- In the export path, you will find a directory called "vRODoc Files"
+- Open vRODoc Files > packageName folder > docs > index.html
+- In your browser, a page will open up with all your actions in a beautiful JSdoc format. 
 
 ## Features
 - Automatic prerequisite validation
