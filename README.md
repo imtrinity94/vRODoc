@@ -36,8 +36,6 @@ vRODoc is a PowerShell-based tool that automatically generates comprehensive JSD
              -skipChecks $false
 
 ```
-![vrodoc_1](https://github.com/user-attachments/assets/3586588e-271e-42bd-a71d-c29329a06b32)
-
 ### Parameters
 | Parameter    | Description                                      | Default        |
 |-------------|--------------------------------------------------|----------------|
@@ -61,7 +59,12 @@ exportPath/
         └── docs/
             └── index.html
 ```
-## Output HTML webpages with JSdoc annotation
+
+## Demo
+### Running the script
+![vrodoc_1](https://github.com/user-attachments/assets/3586588e-271e-42bd-a71d-c29329a06b32)
+
+### Checking output HTML pages
 ![vrodoc_4](https://github.com/user-attachments/assets/b901bc0d-e5a3-4f65-8499-bbd1f98012d4)
 
 
