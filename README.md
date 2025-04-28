@@ -42,11 +42,11 @@ vRODoc is a PowerShell-based tool that automatically generates comprehensive JSD
 | Parameter    | Description                                      | Default        |
 |-------------|--------------------------------------------------|----------------|
 | vroHost     | vRA FQDN for embedded vRO                                 | vro.domain     |
-| vroPort     | vRO port (443 for 8.x, 8281 for 7.x)            | 443            |
+| vroPort     | vRO port (443 for 8.x)        | 443            |
 | user        | Username for vRA authentication                   | user@domain    |
 | pass        | Password for vRA authentication                   | pa$$W0rd              |
 | exportPath  | Output directory for documentation               | C:\Users\user\ |
-| packageName | vRO package name to document                     | -              |
+| packageName | vRO package name to document (eg. com.vmware.utilities)                   | -              |
 | autoFix     | Automatically fix missing prerequisites          | true           |
 | skipChecks  | Skip prerequisite checks (not recommended)       | false          |
 
@@ -62,14 +62,15 @@ exportPath/
             └── index.html
 ```
 ## Output HTML webpages with JSdoc annotation
+![vrodoc_4](https://github.com/user-attachments/assets/b901bc0d-e5a3-4f65-8499-bbd1f98012d4)
 
-![vrodoc_2](https://github.com/user-attachments/assets/bf034c86-01eb-4aef-a1a4-e9cb70bce10f)
 
 ## Steps to follow
 - Create a package with all the custom actions.
 - As script works for embedded vRO, fill all the parameter values either in script or while running the script.
+- Wait for the script to successfully complete.
 - In the export path, you will find a directory called "vRODoc Files"
-- Open vRODoc Files > packageName folder > docs > index.html
+- Open vRODoc Files > packageName folder (eg. com.vmware.utilities) > docs > index.html
 - In your browser, a page will open up with all your actions in a beautiful JSdoc format. 
 
 ## Features
