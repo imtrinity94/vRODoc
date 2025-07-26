@@ -1,0 +1,37 @@
+{
+  "name": "vrodoc",
+  "version": "1.0.0",
+  "description": "Documentation generator for vRO JavaScript actions",
+  "main": "vroDoc.ps1",
+  "scripts": {
+    "docs": "node_modules/.bin/jsdoc -c jsdoc.config.json",
+    "prepare": "npm install",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "vro",
+    "documentation",
+    "jsdoc",
+    "minami"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "taffydb": "^2.7.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.22.10",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/plugin-proposal-pipeline-operator": "^7.18.10",
+    "@babel/plugin-proposal-private-methods": "^7.18.6",
+    "@babel/preset-env": "^7.22.10",
+    "jsdoc": "^4.0.2",
+    "minami": "^1.2.3"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "browserslist": [
+    "defaults"
+  ]
+}

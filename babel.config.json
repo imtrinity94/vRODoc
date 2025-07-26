@@ -1,0 +1,36 @@
+{
+  "presets": [
+    ["@babel/preset-env", {
+      "targets": {
+        "esmodules": false,
+        "rhino": "1.7.4"
+      },
+      "modules": "commonjs",
+      "useBuiltIns": false,
+      "shippedProposals": false,
+      "forceAllTransforms": true,
+      "loose": true
+    }]
+  ],
+  "plugins": [
+    ["@babel/plugin-proposal-pipeline-operator", { "proposal": "hack", "topicToken": "#" }],
+    "@babel/plugin-transform-parameters",
+    "@babel/plugin-transform-shorthand-properties",
+    "@babel/plugin-transform-member-expression-literals",
+    "@babel/plugin-transform-property-literals",
+    ["@babel/plugin-proposal-class-properties", { "loose": true }],
+    ["@babel/plugin-proposal-private-methods", { "loose": true }]
+  ],
+  "parserOpts": {
+    "allowReturnOutsideFunction": true,
+    "allowSuperOutsideMethod": true,
+    "allowUndeclaredExports": true,
+    "errorRecovery": true
+  },
+  "generatorOpts": {
+    "compact": false,
+    "minified": false,
+    "comments": true
+  },
+  "sourceMaps": false
+}

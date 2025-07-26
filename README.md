@@ -10,17 +10,17 @@ vRODoc is a PowerShell-based tool that automatically generates comprehensive JSD
 - 🔐 Secure vRO authentication handling
 - 📦 Package extraction and processing
 - 📄 JSDoc-compatible documentation generation
-- 🌐 Searchable HTML output
-- ⚡ Support for both vRO 7.x and 8.x
+- 🌐 Searchable HTML output with Minami theme
+- ⚡ Optimized for vRO 8.x and above
 
 ## Prerequisites
 - PowerShell 5.1 or higher
-- Node.js
-- JSDoc
+- Node.js 16.x or higher
+- JSDoc with Minami theme
 - Write access to export directory
-- Network access to vRO server
-- Embedded vRO Setup only
-- Works on Windows. Script not tested on Linux.
+- Network access to vRO server (port 443 by default)
+- vRO 8.x or higher
+- Windows OS (tested on Windows 10/11 and Windows Server 2016/2019/2022)
 
 > The script can automatically install missing prerequisites if `autoFix` is enabled.
 ```

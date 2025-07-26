@@ -1,0 +1,82 @@
+{
+  "tags": {
+    "allowUnknownTags": ["date"],
+    "dictionaries": ["jsdoc", "closure"]
+  },
+  "plugins": ["plugins/markdown"],
+  "markdown": {
+    "excludeTags": ["example"],
+    "hardwrap": true,
+    "idInHeadings": true
+  },
+  "sourceType": "script",
+  "ecmaVersion": 5,
+  "commonjs": true,
+  "source": {
+    "includePattern": ".+\\.js(doc|x)?$",
+    "excludePattern": "(^|\\/|\\\\)_|node_modules"
+  },
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false,
+    "default": {
+      "outputSourceFiles": true,
+      "includeDate": false,
+      "useLongnameInNav": true
+    },
+    "systemName": "vRO Documentation",
+    "footer": "",
+    "copyright": "vRO Documentation",
+    "navType": "vertical",
+    "theme": "minami",
+    "linenums": true,
+    "collapseSymbols": false,
+    "inverseNav": true,
+    "outputSourcePath": true,
+    "dateFormat": "ddd MMM Do YYYY",
+    "syntaxTheme": "default",
+    "search": true
+  },
+  "opts": {
+    "encoding": "utf8",
+    "private": false,
+    "recurse": true,
+    "template": "./node_modules/minami",
+    "destination": "./docs/",
+    "readme": "./README.md"
+  },
+  "minami": {
+    "static": true,
+    "searchConfig": {
+      "highlightTerms": true,
+      "fuzzy": true,
+      "minLength": 3,
+      "maxResults": 10
+    },
+    "meta": {
+      "title": "vRO Documentation",
+      "description": "Automatically generated documentation for vRO JavaScript actions",
+      "keyword": "vRO, VCF, Aria, Orchestrator, Documentation, VCF Operations Orchestrator"
+    },
+    "nav": [
+      {
+        "title": "Home",
+        "url": "index.html"
+      },
+      {
+        "title": "Tutorials",
+        "url": "tutorials.html"
+      }
+    ],
+    "stylesheets": [
+      "./css/custom.css"
+    ],
+    "scripts": [
+      "./js/custom.js"
+    ]
+  },
+  "babel": {
+    "babelrc": false,
+    "configFile": "./babel.config.json"
+  }
+}
