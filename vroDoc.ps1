@@ -1,23 +1,23 @@
 <#
 .SYNOPSIS
-vRODoc - Converts vRO Code directly into JSDoc website with automatic prerequisite checks and fixes.
+vRODoc v3.0 - Converts vRO Code directly into JSDoc website with automatic prerequisite checks and fixes.
 
 .DESCRIPTION
 This enhanced script performs prerequisite validation before execution and attempts to automatically fix missing dependencies.
-It converts vRO Packages into JSDoc documentation by connecting to vRO and creates a searchable HTML documentation site.
+It converts Aria Automation Orchestrator (formerly vRealize Orchestrator or vRO) Packages into JSDoc documentation by connecting to the Orchestrator and creates a searchable HTML documentation site.
 
 .PARAMETER vroHost
-The FQDN of vRO host
+The FQDN of Aria Automation Orchestrator host (formerly vRealize Orchestrator or vRO)
 .PARAMETER vroPort
-Port to connect to vRO host (default: 443)
+Port to connect to Aria Automation Orchestrator host (default: 443)
 .PARAMETER user
-Username to connect to vroHost
+Username to connect to Aria Automation Orchestrator host
 .PARAMETER pass
-Password to connect to vroHost
+Password to connect to Aria Automation Orchestrator host
 .PARAMETER exportPath
 Specify full path of a folder location for all the action to happen.
 .PARAMETER packageName
-Specify the package name in vroHost which contains the actions to be documented.
+Specify the package name in Aria Automation Orchestrator host which contains the actions to be documented.
 .PARAMETER autoFix
 Automatically attempt to fix missing prerequisites (default: $true)
 .PARAMETER skipChecks
@@ -163,11 +163,11 @@ function Get-OptionalParameter {
 }
 
 # Prompt for mandatory parameters if not provided
-Get-MandatoryParameter -ParameterName "vroHost" -Description "The FQDN of vRO host (e.g., vro.company.com)"
+Get-MandatoryParameter -ParameterName "vroHost" -Description "The FQDN of Aria Automation Orchestrator host (e.g., aao.company.com)"
 Get-MandatoryParameter -ParameterName "user" -Description "Username to connect to vroHost (e.g., admin@vsphere.local)"
 Get-MandatoryParameter -ParameterName "pass" -Description "Password to connect to vroHost" -IsPassword
 Get-MandatoryParameter -ParameterName "exportPath" -Description "Full path of folder location for documentation output (e.g., C:\Documentation)"
-Get-MandatoryParameter -ParameterName "packageName" -Description "vRO package name to document (e.g., com.vmware.library.http-rest)"
+Get-MandatoryParameter -ParameterName "packageName" -Description "Aria Automation Orchestrator package name to document (e.g., com.vmware.library.http-rest)"
 
 # Prompt for optional parameters
 Get-OptionalParameter -ParameterName "vroPort" -Description "Port to connect to vRO host" -DefaultValue "443" -ParameterType "int"
@@ -176,8 +176,8 @@ Get-OptionalParameter -ParameterName "skipChecks" -Description "Skip prerequisit
 
 # Display parameter summary
 Write-ColorOutput "`n=== Parameter Summary ===" -color "Cyan"
-Write-ColorOutput "vRO Host: $vroHost" -color "Green"
-Write-ColorOutput "vRO Port: $vroPort" -color "Green"
+Write-ColorOutput "Aria Automation Orchestrator Host: $vroHost" -color "Green"
+Write-ColorOutput "Aria Automation Orchestrator Port: $vroPort" -color "Green"
 Write-ColorOutput "Username: $user" -color "Green"
 Write-ColorOutput "Export Path: $exportPath" -color "Green"
 Write-ColorOutput "Package Name: $packageName" -color "Green"
@@ -599,7 +599,7 @@ $originalDirectory = Get-Location
 
 try {
     # Log script start
-    Write-Log "vRODoc - Automated vRO Documentation Generator" -Color "Magenta" -Level "INFO"
+    Write-Log "vRODoc - Automated Aria Automation Orchestrator Documentation Generator" -Color "Magenta" -Level "INFO"
     Write-Log "Original working directory: $originalDirectory" -Level "DEBUG"
     Write-Log "Version 2.2.0 (Enhanced with Logging)" -Color "Cyan" -Level "INFO"
     Write-Log "Log file: $script:logFile" -Level "INFO"
@@ -636,7 +636,7 @@ try {
     }
     
     # Proceed with main script functionality
-    Write-ColorOutput "`n=== Starting vRO Documentation Generation ===" -color "Cyan"
+    Write-ColorOutput "=== Starting Aria Automation Orchestrator Documentation Generation ===" -color "Cyan"
     
     # Increase timeout for web requests
     [System.Net.ServicePointManager]::MaxServicePointIdleTime = 30000
@@ -657,7 +657,7 @@ try {
     }
     
     # Export package from vRO with enhanced error handling
-    Write-ColorOutput "Exporting package from vRO..." -color "Yellow"
+    Write-ColorOutput "Exporting package from Aria Automation Orchestrator..." -color "Yellow"
     $queryParams = @{
         exportConfigurationAttributeValues = 'true'
         exportGlobalTags = 'true'
@@ -691,7 +691,7 @@ try {
         }
     }
     catch {
-        Write-ColorOutput "Error connecting to vRO server: $($_.Exception.Message)" -color "Red"
+        Write-ColorOutput "Error connecting to Aria Automation Orchestrator server: $($_.Exception.Message)" -color "Red"
         Write-ColorOutput "Checking connectivity to $vroHost..." -color "Yellow"
         
         # Test basic connectivity
@@ -703,7 +703,7 @@ try {
             Write-ColorOutput "Cannot connect to $vroHost on port $vroPort. Please check network connectivity." -color "Red"
         }
         
-        throw "Failed to export package from vRO. Please check server details and credentials."
+        throw "Failed to export package from Aria Automation Orchestrator. Please check server details and credentials."
     }
 
     # Extract package
@@ -724,7 +724,7 @@ try {
         throw "Elements folder not found in the exported package. Export may have failed."
     }
 
-    Write-ColorOutput "Processing vRO elements..." -color "Yellow"
+    Write-ColorOutput "Processing Aria Automation Orchestrator elements..." -color "Yellow"
     cd $ElementsFolder
     $dir = Get-ChildItem $ElementsFolder | Where-Object { $_.PSISContainer }
 
@@ -823,7 +823,7 @@ $($actionScript -replace "(?m)^", "")
         @"
 # $packageName Documentation
 
-This documentation was automatically generated from the vRO package: **$packageName**
+This documentation was automatically generated from the Aria Automation Orchestrator package: **$packageName**
 
 ## Overview
 
@@ -901,9 +901,15 @@ $(Get-Date -Format "yyyy-MM-dd HH:mm:ss")
             } | ConvertTo-Json -Depth 10 | Out-File -FilePath $packageJsonPath -Encoding utf8 -Force
         }
         
-        # Ensure jsdoc.config.json exists in the script directory
+        # Check if config files exist in repo before creating
         $jsdocConfigPath = Join-Path $PSScriptRoot "jsdoc.config.json"
-        if (-not (Test-Path $jsdocConfigPath)) {
+        $repoJsdocConfig = Join-Path (Split-Path $PSScriptRoot -Parent) "vRODoc\jsdoc.config.json"
+        
+        if (Test-Path $repoJsdocConfig) {
+            Write-ColorOutput "Copying jsdoc.config.json from repository..." -color "Yellow"
+            Copy-Item -Path $repoJsdocConfig -Destination $jsdocConfigPath -Force
+        }
+        elseif (-not (Test-Path $jsdocConfigPath)) {
             Write-ColorOutput "Creating jsdoc.config.json in script directory..." -color "Yellow"
             @{
                 tags = @{
@@ -931,9 +937,9 @@ $(Get-Date -Format "yyyy-MM-dd HH:mm:ss")
                         includeDate = $false
                         useLongnameInNav = $true
                     }
-                    systemName = "vRO Documentation"
+                    systemName = "Aria Automation Orchestrator Documentation"
                     footer = ""
-                    copyright = "vRO Documentation"
+                    copyright = "Aria Automation Orchestrator Documentation"
                     navType = "vertical"
                     theme = "minami"
                     linenums = $true
@@ -961,9 +967,9 @@ $(Get-Date -Format "yyyy-MM-dd HH:mm:ss")
                         maxResults = 10
                     }
                     meta = @{
-                        title = "vRO Documentation"
-                        description = "Automatically generated documentation for vRO JavaScript actions"
-                        keyword = "vRO, VCF, Aria, Orchestrator, Documentation, VCF Operations Orchestrator"
+                        title = "Aria Automation Orchestrator Documentation"
+                        description = "Automatically generated documentation for Aria Automation Orchestrator JavaScript actions"
+                        keyword = "Aria Automation Orchestrator, VCF Operations Orchestrator, vRO, vRealize Orchestrator, Documentation"
                     }
                     nav = @(
                         @{
@@ -987,7 +993,13 @@ $(Get-Date -Format "yyyy-MM-dd HH:mm:ss")
         
         # Ensure babel.config.json exists in the script directory
         $babelConfigPath = Join-Path $PSScriptRoot "babel.config.json"
-        if (-not (Test-Path $babelConfigPath)) {
+        $repoBabelConfig = Join-Path (Split-Path $PSScriptRoot -Parent) "vRODoc\babel.config.json"
+        
+        if (Test-Path $repoBabelConfig) {
+            Write-ColorOutput "Copying babel.config.json from repository..." -color "Yellow"
+            Copy-Item -Path $repoBabelConfig -Destination $babelConfigPath -Force
+        }
+        elseif (-not (Test-Path $babelConfigPath)) {
             Write-ColorOutput "Creating babel.config.json in script directory..." -color "Yellow"
             @{
                 presets = @(
@@ -1046,39 +1058,103 @@ $(Get-Date -Format "yyyy-MM-dd HH:mm:ss")
         try {
             Write-ColorOutput "Installing npm packages in: $PSScriptRoot" -color "Cyan"
             
-            # Try different installation methods
+            # Enhanced npm installation with retry logic and progress tracking
+            $maxRetries = 3
+            $retryDelay = 10 # seconds
             $success = $false
+            
+            # Try different installation methods with retries
             $attempts = @(
                 { & $npmPath install --no-fund --no-audit --no-progress --prefer-offline },
                 { & cmd.exe /c "`"$npmPath`" install --no-fund --no-audit --no-progress --prefer-offline" },
-                { Start-Process -FilePath $npmPath -ArgumentList "install --no-fund --no-audit --no-progress --prefer-offline" -NoNewWindow -Wait -WorkingDirectory $PSScriptRoot -PassThru }
+                {
+                    try {
+                        & $npmPath cache clean --force
+                        & $npmPath install --no-fund --no-audit --no-progress --prefer-offline
+                    }
+                    catch {
+                        Write-ColorOutput "[WARNING] Cache clean failed, proceeding with install: $($_.Exception.Message)" -color "Yellow"
+                        & $npmPath install --no-fund --no-audit --no-progress --prefer-offline
+                    }
+                }
             )
             
             foreach ($attempt in $attempts) {
-                try {
-                    Write-ColorOutput "Attempting to install packages using: $($attempt.ToString())" -color "Cyan"
-                    $process = Invoke-Command $attempt
+                for ($retry = 1; $retry -le $maxRetries; $retry++) {
+                    try {
+                        Write-ColorOutput "[Attempt $retry of $maxRetries] Installing packages using: $($attempt.ToString())" -color "Cyan"
+                        
+                        # Start timer
+                        $timer = [System.Diagnostics.Stopwatch]::StartNew()
+                        
+                        # Run installation
+                        $process = Invoke-Command $attempt
+                        
+                        # Check success
+                        if (($process -and $process.ExitCode -eq 0) -or $?) {
+                            $timer.Stop()
+                            Write-ColorOutput "[SUCCESS] Installation completed in $($timer.Elapsed.ToString('mm\:ss'))" -color "Green"
+                            $success = $true
+                            break
+                        }
+                        
+                        $timer.Stop()
+                        Write-ColorOutput "[WARNING] Installation attempt failed after $($timer.Elapsed.ToString('mm\:ss'))" -color "Yellow"
+                    }
+                    catch {
+                        Write-ColorOutput "[ERROR] Attempt failed: $($_.Exception.Message)" -color "Red"
+                        Write-Log "npm install attempt $retry failed: $($_.Exception.Message)" -Level "ERROR"
+                        
+                        # Capture npm debug log if available
+                        $npmDebugLog = Join-Path $env:TEMP "npm-debug.log"
+                        if (Test-Path $npmDebugLog) {
+                            $logContent = Get-Content $npmDebugLog -Tail 20 -ErrorAction SilentlyContinue
+                            if ($logContent) {
+                                Write-Log "=== Last 20 lines of npm debug log ===" -Level "ERROR"
+                                $logContent | ForEach-Object { Write-Log $_ -Level "ERROR" }
+                            }
+                        }
+                    }
                     
-                    if (($process -and $process.ExitCode -eq 0) -or $?) {
-                        $success = $true
-                        break
+                    if (-not $success -and $retry -lt $maxRetries) {
+                        Write-ColorOutput "Waiting $retryDelay seconds before retry..." -color "Yellow"
+                        Start-Sleep -Seconds $retryDelay
                     }
                 }
-                catch {
-                    Write-ColorOutput "Attempt failed: $($_.Exception.Message)" -color "Yellow"
-                }
+                
+                if ($success) { break }
             }
             
             if (-not $success) {
+                # Clean up failed installation artifacts
+                try {
+                    $nodeModulesPath = Join-Path $PSScriptRoot "node_modules"
+                    $packageLockPath = Join-Path $PSScriptRoot "package-lock.json"
+                    
+                    if (Test-Path $nodeModulesPath) {
+                        Write-ColorOutput "Cleaning up failed installation (removing node_modules)" -color "Yellow"
+                        Remove-Item -Path $nodeModulesPath -Recurse -Force -ErrorAction SilentlyContinue
+                    }
+                    
+                    if (Test-Path $packageLockPath) {
+                        Write-ColorOutput "Cleaning up failed installation (removing package-lock.json)" -color "Yellow"
+                        Remove-Item -Path $packageLockPath -Force -ErrorAction SilentlyContinue
+                    }
+                }
+                catch {
+                    Write-ColorOutput "Warning: Failed to clean up installation artifacts: $($_.Exception.Message)" -color "Yellow"
+                }
+                
                 $manualCmds = @"
 
-[!] Automatic package installation failed. Please run these commands manually:
+[!] Automatic package installation failed after $maxRetries attempts. Please run these commands manually:
 
 1. Open PowerShell as Administrator
 2. Run these commands:
 
 Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
 cd "$PSScriptRoot"
+npm cache clean --force
 npm install --no-fund --no-audit --no-progress --prefer-offline
 
 If you still encounter issues, try:
@@ -1141,6 +1217,20 @@ If you still encounter issues, try:
             Write-ColorOutput $successMsg -color "Green"
             Write-Log "Generated $($docFiles.Count) documentation files" -Level "INFO"
         } else {
+            # Enhanced error reporting for skipped files
+            $errorLogPath = Join-Path $env:TEMP "jsdoc-error.log"
+            if (Test-Path $errorLogPath) {
+                $errorLines = Get-Content $errorLogPath | Where-Object { $_ -match "Unable to parse" }
+                if ($errorLines) {
+                    Write-ColorOutput "\n=== Files Skipped Due to Parsing Errors ===" -color "Magenta"
+                    foreach ($line in $errorLines) {
+                        $filePath = $line -replace ".*Unable to parse (.*?):.*", '$1'
+                        Write-ColorOutput "  [SKIPPED] $filePath" -color "DarkMagenta"
+                    }
+                    Write-ColorOutput "\nThese files were skipped due to syntax errors but documentation was generated for other files." -color "Magenta"
+                }
+            }
+            
             $warningMsg = "[WARNING] JSDoc completed with errors. Some files could not be parsed."
             Write-Log $warningMsg -Level "WARNING"
             Write-ColorOutput $warningMsg -color "Yellow"
@@ -1162,15 +1252,17 @@ If you still encounter issues, try:
         Set-Location -Path $originalWorkingDir
     }
     $docsPath = Join-Path $savePath "docs"
-    if (Test-CommandExists "jsdoc" -and (Test-Path $docsPath)) {
+    if ((Test-CommandExists "jsdoc") -and (Test-Path $docsPath)) {
         Write-ColorOutput "Documentation generated at: $docsPath" -color "Green"
         Write-ColorOutput "Open index.html in your browser to view the documentation" -color "Green"
     } else {
         Write-ColorOutput "JSDoc not available or documentation directory missing. HTML documentation generation skipped." -color "Red"
     }
-    Write-ColorOutput "\n=== vRO Documentation Generation Complete ===" -color "Cyan"
+    Write-ColorOutput "=== Aria Automation Orchestrator Documentation Generation Complete ===" -color "Cyan"
     Write-ColorOutput "[INFO] Script completed at $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')" -color "Cyan"
-    if (Test-Path $docsPath -and (Get-ChildItem -Path $docsPath -Recurse -File -ErrorAction SilentlyContinue).Count -gt 0) {
+    $docsPathExists = Test-Path $docsPath
+    $docsFilesExist = (Get-ChildItem -Path $docsPath -Recurse -File -ErrorAction SilentlyContinue).Count -gt 0
+    if ($docsPathExists -and $docsFilesExist) {
         exit 0
     } else {
         exit 1
@@ -1191,8 +1283,10 @@ finally {
         Write-Log "Log file: $script:logFile" -Level "INFO"
         
         # Restore original directory
-        Set-Location -Path $originalDirectory
-        Write-Log "Restored working directory to: $originalDirectory" -Level "DEBUG"
+        if ($originalDirectory -and (Test-Path $originalDirectory)) {
+            Set-Location -Path $originalDirectory
+            Write-Log "Restored working directory to: $originalDirectory" -Level "DEBUG"
+        }
         
         # Stop transcript if it's running
         try { Stop-Transcript -ErrorAction SilentlyContinue | Out-Null }

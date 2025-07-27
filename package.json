@@ -1,7 +1,7 @@
 {
   "name": "vrodoc",
-  "version": "1.0.0",
-  "description": "Documentation generator for vRO JavaScript actions",
+  "version": "3.0.0",
+  "description": "Documentation generator for Aria Automation Orchestrator / VCF Operations Orchestrator JavaScript actions",
   "main": "vroDoc.ps1",
   "scripts": {
     "docs": "node_modules/.bin/jsdoc -c jsdoc.config.json",

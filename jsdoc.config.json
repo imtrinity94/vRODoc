@@ -24,9 +24,9 @@
       "includeDate": false,
       "useLongnameInNav": true
     },
-    "systemName": "vRO Documentation",
+    "systemName": "Aria Automation Orchestrator Documentation",
     "footer": "",
-    "copyright": "vRO Documentation",
+    "copyright": "Aria Automation Orchestrator Documentation",
     "navType": "vertical",
     "theme": "minami",
     "linenums": true,
@@ -54,9 +54,9 @@
       "maxResults": 10
     },
     "meta": {
-      "title": "vRO Documentation",
-      "description": "Automatically generated documentation for vRO JavaScript actions",
-      "keyword": "vRO, VCF, Aria, Orchestrator, Documentation, VCF Operations Orchestrator"
+      "title": "Aria Automation Orchestrator Documentation",
+      "description": "Automatically generated documentation for Aria Automation Orchestrator JavaScript actions",
+      "keyword": "Aria Automation Orchestrator, VCF Operations Orchestrator, vRO, vRealize Orchestrator, Documentation"
     },
     "nav": [
       {
