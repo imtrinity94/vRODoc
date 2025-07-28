@@ -18,8 +18,8 @@
     "@babel/plugin-transform-shorthand-properties",
     "@babel/plugin-transform-member-expression-literals",
     "@babel/plugin-transform-property-literals",
-    ["@babel/plugin-proposal-class-properties", { "loose": true }],
-    ["@babel/plugin-proposal-private-methods", { "loose": true }]
+    ["@babel/plugin-transform-class-properties", { "loose": true }],
+    ["@babel/plugin-transform-private-methods", { "loose": true }]
   ],
   "parserOpts": {
     "allowReturnOutsideFunction": true,

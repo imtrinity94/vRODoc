@@ -858,24 +858,12 @@ $(Get-Date -Format "yyyy-MM-dd HH:mm:ss")
 
         # Improved npm path detection
         if ($null -eq $npmPath -or $npmPath -eq "") {
-            $npmPath = (Get-Command npm -ErrorAction SilentlyContinue).Source
-            if (-not $npmPath) {
-                $possibleNpmPaths = @(
-                    "$env:ProgramFiles\nodejs\npm.cmd",
-                    "$env:ProgramFiles\nodejs\npm.ps1",
-                    "$env:USERPROFILE\AppData\Roaming\npm\npm.cmd"
-                )
-                $npmPath = $possibleNpmPaths | Where-Object { Test-Path $_ } | Select-Object -First 1
-            }
+            $npmPath = "$env:ProgramFiles\nodejs\npm.cmd"
         }
         Write-ColorOutput "DEBUG: Detected npm path: $npmPath" -color "Yellow"
         if (-not $npmPath -or -not (Test-Path $npmPath)) {
-            Write-ColorOutput "npm was not found automatically. Please enter the full path to npm (e.g., C:\\Program Files\\nodejs\\npm.cmd):" -color "Red"
-            $npmPath = Read-Host "Enter npm path"
-            if (-not (Test-Path $npmPath)) {
-                Write-ColorOutput "ERROR: npm not found at the specified path. Please ensure Node.js and npm are installed and try again." -color "Red"
-                exit 1
-            }
+            Write-ColorOutput "ERROR: npm not found at the default path ($npmPath). Please ensure Node.js and npm are installed and try again." -color "Red"
+            exit 1
         }
         Write-ColorOutput "Using npm at: $npmPath" -color "Green"
 
@@ -1054,124 +1042,37 @@ $(Get-Date -Format "yyyy-MM-dd HH:mm:ss")
         # Change to script directory for npm install
         $originalWorkingDir = Get-Location
         Set-Location -Path $PSScriptRoot
-        
+
         try {
             Write-ColorOutput "Installing npm packages in: $PSScriptRoot" -color "Cyan"
-            
-            # Enhanced npm installation with retry logic and progress tracking
-            $maxRetries = 3
-            $retryDelay = 10 # seconds
-            $success = $false
-            
-            # Try different installation methods with retries
-            $attempts = @(
-                { & $npmPath install --no-fund --no-audit --no-progress --prefer-offline },
-                { & cmd.exe /c "`"$npmPath`" install --no-fund --no-audit --no-progress --prefer-offline" },
-                {
-                    try {
-                        & $npmPath cache clean --force
-                        & $npmPath install --no-fund --no-audit --no-progress --prefer-offline
-                    }
-                    catch {
-                        Write-ColorOutput "[WARNING] Cache clean failed, proceeding with install: $($_.Exception.Message)" -color "Yellow"
-                        & $npmPath install --no-fund --no-audit --no-progress --prefer-offline
-                    }
-                }
-            )
-            
-            foreach ($attempt in $attempts) {
-                for ($retry = 1; $retry -le $maxRetries; $retry++) {
-                    try {
-                        Write-ColorOutput "[Attempt $retry of $maxRetries] Installing packages using: $($attempt.ToString())" -color "Cyan"
-                        
-                        # Start timer
-                        $timer = [System.Diagnostics.Stopwatch]::StartNew()
-                        
-                        # Run installation
-                        $process = Invoke-Command $attempt
-                        
-                        # Check success
-                        if (($process -and $process.ExitCode -eq 0) -or $?) {
-                            $timer.Stop()
-                            Write-ColorOutput "[SUCCESS] Installation completed in $($timer.Elapsed.ToString('mm\:ss'))" -color "Green"
-                            $success = $true
-                            break
-                        }
-                        
-                        $timer.Stop()
-                        Write-ColorOutput "[WARNING] Installation attempt failed after $($timer.Elapsed.ToString('mm\:ss'))" -color "Yellow"
-                    }
-                    catch {
-                        Write-ColorOutput "[ERROR] Attempt failed: $($_.Exception.Message)" -color "Red"
-                        Write-Log "npm install attempt $retry failed: $($_.Exception.Message)" -Level "ERROR"
-                        
-                        # Capture npm debug log if available
-                        $npmDebugLog = Join-Path $env:TEMP "npm-debug.log"
-                        if (Test-Path $npmDebugLog) {
-                            $logContent = Get-Content $npmDebugLog -Tail 20 -ErrorAction SilentlyContinue
-                            if ($logContent) {
-                                Write-Log "=== Last 20 lines of npm debug log ===" -Level "ERROR"
-                                $logContent | ForEach-Object { Write-Log $_ -Level "ERROR" }
-                            }
-                        }
-                    }
-                    
-                    if (-not $success -and $retry -lt $maxRetries) {
-                        Write-ColorOutput "Waiting $retryDelay seconds before retry..." -color "Yellow"
-                        Start-Sleep -Seconds $retryDelay
-                    }
-                }
-                
-                if ($success) { break }
-            }
-            
-            if (-not $success) {
-                # Clean up failed installation artifacts
-                try {
-                    $nodeModulesPath = Join-Path $PSScriptRoot "node_modules"
-                    $packageLockPath = Join-Path $PSScriptRoot "package-lock.json"
-                    
-                    if (Test-Path $nodeModulesPath) {
-                        Write-ColorOutput "Cleaning up failed installation (removing node_modules)" -color "Yellow"
-                        Remove-Item -Path $nodeModulesPath -Recurse -Force -ErrorAction SilentlyContinue
-                    }
-                    
-                    if (Test-Path $packageLockPath) {
-                        Write-ColorOutput "Cleaning up failed installation (removing package-lock.json)" -color "Yellow"
-                        Remove-Item -Path $packageLockPath -Force -ErrorAction SilentlyContinue
-                    }
-                }
-                catch {
-                    Write-ColorOutput "Warning: Failed to clean up installation artifacts: $($_.Exception.Message)" -color "Yellow"
-                }
-                
-                $manualCmds = @"
 
-[!] Automatic package installation failed after $maxRetries attempts. Please run these commands manually:
+            # Run npm install
+            & $npmPath install --no-fund --no-audit --no-progress --prefer-offline
 
-1. Open PowerShell as Administrator
-2. Run these commands:
-
-Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
-cd "$PSScriptRoot"
-npm cache clean --force
-npm install --no-fund --no-audit --no-progress --prefer-offline
-
-If you still encounter issues, try:
-1. Delete the 'node_modules' folder (if exists)
-2. Delete 'package-lock.json' (if exists)
-3. Run the commands above again
-"@
-                Write-ColorOutput $manualCmds -color "Red"
-                exit 1
-            }
-            
             # Verify installation
+            $nodeModulesPath = Join-Path $PSScriptRoot "node_modules"
             if (-not (Test-Path $nodeModulesPath)) {
                 throw "Package installation failed. 'node_modules' directory not found after installation."
             }
-            
+
             Write-ColorOutput "npm packages installed successfully in: $PSScriptRoot" -color "Green"
+        }
+        catch {
+            Write-ColorOutput "[ERROR] npm installation failed: $($_.Exception.Message)" -color "Red"
+
+            # Clean up failed installation artifacts
+            $nodeModulesPath = Join-Path $PSScriptRoot "node_modules"
+            $packageLockPath = Join-Path $PSScriptRoot "package-lock.json"
+
+            if (Test-Path $nodeModulesPath) {
+                Remove-Item -Path $nodeModulesPath -Recurse -Force -ErrorAction SilentlyContinue
+            }
+
+            if (Test-Path $packageLockPath) {
+                Remove-Item -Path $packageLockPath -Force -ErrorAction SilentlyContinue
+            }
+
+            throw "npm installation failed. Please check the error and try again."
         }
         finally {
             # Restore original working directory
